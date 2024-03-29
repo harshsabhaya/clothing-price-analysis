@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 public class ScrapperMain {
+    
     public WebDriver getDrive() {
         WebDriver driver = null;
         String chromeDrivePath =  "C:\\Users\\Harsh Sabhaya\\eclipse-workspace\\chromedriver-win64\\chromedriver.exe";

@@ -1,7 +1,10 @@
 package org.clothing.scraper;
 
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -12,12 +15,27 @@ public class StoreDataInFile {
     private String productBrand;
     private String productCategory;
 
-    StoreDataInFile( String pName, String pPrice, String pBrand, String pCategory){
-        productName=pName;
-        productPrice=pPrice;
-        productBrand=pBrand;
-        productCategory=pCategory;
+    StoreDataInFile(String pName, String pPrice, String pBrand, String pCategory) {
+        productName = pName;
+        productPrice = pPrice;
+        productBrand = pBrand;
+        productCategory = pCategory;
     }
+
+    public static String getFilePath(String fileName) {
+        Path currentPath = Paths.get(System.getProperty("user.dir"));
+        Path dirpath = Paths.get(currentPath.toString(), "assets");
+
+        return dirpath + "/" + fileName;
+    }
+
+    public static void deleteIfFileExist(String filePath) {
+        File file = new File(filePath);
+        if (file.exists()) {
+            file.delete();
+        }
+    }
+
     // Getter and Setter for productName
     public String getProductName() {
         return productName;
@@ -55,18 +73,14 @@ public class StoreDataInFile {
     }
 
     public String getDataInCsvFormat() {
-        return "\"" + productName.replace("\"", "'") +"\"" + "," +"\"" +
-                productPrice  +"\"" + "," +"\"" +
-                productBrand.replace("\"", "'")  +"\"" + "," +"\"" +
-                productCategory.replace("\"", "'")  + "\"\n";
+        return "\"" + productName.replace("\"", "'") + "\"" + "," + "\"" +
+                productPrice + "\"" + "," + "\"" +
+                productBrand.replace("\"", "'") + "\"" + "," + "\"" +
+                productCategory.replace("\"", "'") + "\"\n";
     }
 
-    public void saveDataToCsv(String filename) {
-        Path currentPath = Paths.get(System.getProperty("user.dir"));
-        Path dirpath = Paths.get(currentPath.toString(),"assets");
-
-        filename = dirpath +"/"+filename;
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
+    public void saveDataToCsv(String filePath) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
             // Write the content to the file
             writer.write(this.getDataInCsvFormat());
         } catch (IOException e) {

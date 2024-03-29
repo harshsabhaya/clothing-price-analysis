@@ -1,18 +1,24 @@
 package org.clothing;
 
-import org.clothing.scraper.Gap;
-import org.clothing.scraper.HnM;
-import org.clothing.scraper.Meolaa;
+import org.clothing.scraper.Ajio;
+import org.clothing.scraper.Flipkart;
+import org.clothing.scraper.Myntra;
 
 import java.util.List;
 import java.util.Scanner;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
+    public static void webScrapping(String category) {
+        Myntra.handleCrawling(category);
+        Flipkart.handleCrawling(category);
+        Ajio.handleCrawling(category);
+    }
+
     public static void displayMessage() {
-        System.out.println("Enter the category you want search: :");
-        System.out.println("Some popular categories user frequently search are listed below");
+        System.out.println("Some popular searched categories");
         System.out.println("""
                 ---------------------
                 1) Casual Wear
@@ -21,40 +27,25 @@ public class Main {
                 ---------------------""");
 
         Scanner scanner = new Scanner(System.in);
-        int category = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter a brand name you want search:");
-        String brandName = scanner.nextLine();
-        SpellChecker obj = new SpellChecker();
-        List<String> result = obj.checkSpelling(brandName);
+        System.out.println("Enter a category you want to search: ");
+        String category = scanner.nextLine();
+        SpellChecker spellChecker = new SpellChecker();
+        List<String> results = spellChecker.checkSpelling(category);
 
-        if(!result.isEmpty()) {
-            System.out.println("Do you want to search?");
-            for(String ele: result) {
+        while (!results.isEmpty()) {
+            for (String ele : results) {
                 System.out.println(ele);
             }
-        }
 
+            // Prompt the user to enter a corrected category
+            System.out.println("Enter a corrected category: ");
+            category = scanner.nextLine();
 
-        switch(category) {
-            case 1:
-                Meolaa.handleCrawling("Casual Wear");
-                Gap.handleCrawling("Casual Wear");
-                HnM.handleCrawling("Casual Wear");
-                break;
-            case 2:
-                Meolaa.handleCrawling("Formal Wear");
-                Gap.handleCrawling("Formal Wear");
-                HnM.handleCrawling("Formal Wear");
-                break;
-            case 3:
-                Meolaa.handleCrawling("Sports Wear");
-                Gap.handleCrawling("Sports Wear");
-                HnM.handleCrawling("Sports Wear");
-                break;
-            default:
-                // code block
+            // Update the result list with the corrected category
+            results = spellChecker.checkSpelling(category);
         }
-        System.out.println("category: "+ category);
+        System.out.println("Web Scraping...........");
+        webScrapping(category);
 
     }
 
