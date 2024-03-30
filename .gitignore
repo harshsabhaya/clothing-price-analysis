@@ -20,6 +20,9 @@ target/
 .settings
 .springBeans
 .sts4-cache
+Ajio.csv
+Flipkart.csv
+Myntra.csv
 
 ### NetBeans ###
 /nbproject/private/

@@ -43,7 +43,7 @@ public class Ajio {
 
             // get all item elements
             List<WebElement> productItems = chromeDrive.findElements(By.cssSelector(cssPathForProductCard));
-            System.out.println("productItems " + productItems);
+
             if (productItems.isEmpty()) {
                 System.out.println("Products not found");
             } else {

@@ -6,6 +6,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Myntra {
 
@@ -32,6 +34,10 @@ public class Myntra {
             String productBrand = "";
             String productCategory = chromeDrive.findElement(By.cssSelector("ul.breadcrumbs-list li:last-child > span")).getText();
 
+            String priceRegex = "Rs\\.\\s*(\\d+)";
+            Pattern pattern = Pattern.compile(priceRegex);
+            String replacement = "₹$1";
+
             if (productItem.isEmpty()) {
                 System.out.println("Products not found");
             } else {
@@ -45,14 +51,16 @@ public class Myntra {
                         productBrand = element.findElement(By.cssSelector(".product-brand")).getText();
 
                         try {
-                            productPrice = element.findElement(By.xpath("div.product-price > span > span.product-discountedPrice")).getText();
+                            productPrice = element.findElement(By.cssSelector("div.product-price > span > span.product-discountedPrice")).getText();
                         } catch (Exception e) {
                             productPrice = element.findElement(By.cssSelector("div.product-price > span")).getText();
                         }
 
-                        System.out.println("productCategory " + productCategory);
+                        Matcher matcher = pattern.matcher(productPrice);
+                        String replacedPrice = matcher.replaceAll(replacement);
+
                         // Print property details to the console.
-                        StoreDataInFile storeObject = new StoreDataInFile(productTitle, productPrice, productBrand, productCategory);
+                        StoreDataInFile storeObject = new StoreDataInFile(productTitle, replacedPrice, productBrand, productCategory);
 
                         storeObject.saveDataToCsv(filePath);
                     } catch (NoSuchElementException e) {

@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class SpellChecker {
-    private static final Integer EDIT_DISTANCE_THRESHOLD = 3;
+    private static final Integer EDIT_DISTANCE_THRESHOLD = 5;
     static Path currentPath = Paths.get(System.getProperty("user.dir"));
     static Path dirpath = Paths.get(currentPath.toString(), "assets");
     private static final String DICTIONARY_PATH = dirpath + "/" + "dictionary.txt";
@@ -16,6 +16,24 @@ public class SpellChecker {
 
     public SpellChecker() {
         dictionary = loadDictionary();
+    }
+
+    public static void checkSpelling(Scanner scanner, String category) {
+        SpellChecker spellChecker = new SpellChecker();
+        List<String> results = spellChecker.checker(category);
+
+        while (!results.isEmpty()) {
+            for (String ele : results) {
+                System.out.println(ele);
+            }
+
+            // Prompt the user to enter a corrected category
+            System.out.println("Enter a corrected category: ");
+            category = scanner.nextLine();
+
+            // Update the result list with the corrected category
+            results = spellChecker.checker(category);
+        }
     }
 
     private static int calculateEditDistance(String str1, String str2) {
@@ -41,7 +59,7 @@ public class SpellChecker {
         System.out.println("Enter a word to spell check:");
         String word = scanner.nextLine();
         SpellChecker obj = new SpellChecker();
-        List<String> result = obj.checkSpelling(word);
+        List<String> result = obj.checker(word);
         System.out.println(result);
         scanner.close();
     }
@@ -77,7 +95,7 @@ public class SpellChecker {
         return dictionary;
     }
 
-    public List<String> checkSpelling(String word) {
+    public List<String> checker(String word) {
         String lowerCaseWord = word.toLowerCase();
 //        if (dictionary.contains(lowerCaseWord)) {
 //            System.out.println("You entered Correct spelling: " + word);
