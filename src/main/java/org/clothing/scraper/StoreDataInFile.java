@@ -73,10 +73,10 @@ public class StoreDataInFile {
     }
 
     public String getDataInCsvFormat() {
-        return "\"" + productName.replace("\"", "'") + "\"" + "," + "\"" +
-                productPrice + "\"" + "," + "\"" +
-                productBrand.replace("\"", "'") + "\"" + "," + "\"" +
-                productCategory.replace("\"", "'") + "\"\n";
+        return productName.replace(",", "") + " , " +
+                productPrice.replace(",", "") + " , " +
+                productBrand.replace(",", "") + " , " +
+                productCategory.replace(",", "") + "\n";
     }
 
     public void saveDataToCsv(String filePath) {
