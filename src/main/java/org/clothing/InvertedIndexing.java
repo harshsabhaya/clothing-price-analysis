@@ -140,7 +140,7 @@ public class InvertedIndexing {
             AVLTree avlTree = buildInvertedIndex(filePath);
 
             AVLNode node = search(avlTree.root, searchWord);
-            System.out.println("-------------------------------------------------\n" +
+            System.out.println("-------------------------------------------------\n" + " >>> " +
                     fileName + ": Searching \"" + searchWord + "\"\n" +
                     "-------------------------------------------------");
             if (node != null) {

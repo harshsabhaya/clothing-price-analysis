@@ -3,15 +3,19 @@ package org.clothing;
 import org.clothing.scraper.Ajio;
 import org.clothing.scraper.Flipkart;
 import org.clothing.scraper.Myntra;
+import org.openqa.selenium.devtools.v85.page.Page;
 
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
     private static final String CSV_FILE = "search_frequency.csv";
+
     private static final Map<String, Integer> wordFrequencyMap = new HashMap<>();
+
 
     public static void collectAndProcessInput(Scanner scanner) {
         String category;
@@ -26,8 +30,10 @@ public class Main {
 
 //       // Perform web scraping based on the entered category
 //        webScrapping(category);
+
         // Update the CSV file with the new word frequency
         saveWordFrequencyToCSV();
+
     }
 
     public static void webScrapping(String category) {
@@ -92,26 +98,41 @@ public class Main {
         InvertedIndexing.findInvertedIndexing(scanner);
     }
 
-//    public static void wordCompletion(Scanner scanner) {
-//        WordCompletion.wordCompletion(scanner);
-//    }
+
+    public static void pageRanking() {
+        PageRanking pageRanking = new PageRanking();
+        PageRanking.main(new String[0]);
+    }
+
+    public static void wordCompletion(Scanner scanner) {
+        WordCompletion.wordCompletion(scanner);
+    }
+
 
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         // Displaying the top categories based on word frequencies
-        System.out.println("-----------------------------------------------");
-        System.out.println("Hey there ! I'm PRODO - Your own Product Analyzer.");
-        System.out.println("I bring you the best info in best possible way from Myntra.com, Flipkart.com & Ajio.com");
-        System.out.println("-----------------------------------------------");
-
+        System.out.println("\n" +
+                "  _    _                  _    _                       _     _____                        _____   _____    ____   _____    ____  \n" +
+                " | |  | |                | |  | |                     | |   |_   _|                      |  __ \\ |  __ \\  / __ \\ |  __ \\  / __ \\ \n" +
+                " | |__| |  ___  _   _    | |_ | |__    ___  _ __  ___ | |     | |     __ _  _ __ ___     | |__) || |__) || |  | || |  | || |  | |\n" +
+                " |  __  | / _ \\| | | |   | __|| '_ \\  / _ \\| '__|/ _ \\| |     | |    / _` || '_ ` _ \\    |  ___/ |  _  / | |  | || |  | || |  | |\n" +
+                " | |  | ||  __/| |_| |   | |_ | | | ||  __/| |  |  __/|_|    _| |_  | (_| || | | | | |   | |     | | \\ \\ | |__| || |__| || |__| |\n" +
+                " |_|  |_| \\___| \\__, |    \\__||_| |_| \\___||_|   \\___|(_)   |_____|  \\__,_||_| |_| |_|   |_|     |_|  \\_\\ \\____/ |_____/  \\____/ \n" +
+                "                 __/ |                                                                                                           \n" +
+                "                |___/                                                                                                            \n");
+        System.out.println("YOUR OWN PRODUCT ANALYZER.");
+        System.out.println("I BRING YOU THE BEST INFO IN BEST POSSIBLE WAY FROM MYNTRA.COM, FLIPKART.COM & AJIO.COM");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
         // Features
         displayTopWords();
         collectAndProcessInput(scanner);
+        wordCompletion(scanner);
         checkFrequency(scanner);
         invertedIndexing(scanner);
-
+        pageRanking();
         scanner.close();
 
     }

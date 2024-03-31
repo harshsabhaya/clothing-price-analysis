@@ -55,7 +55,6 @@ public class FrequencyCount {
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             String line;
-            Map<String, Integer> wordFrequencyMap = new HashMap<>();
             while ((line = br.readLine()) != null) {
                 // Separate all words from the line
                 String[] words = line.split("[^a-zA-Z]+");
@@ -63,9 +62,8 @@ public class FrequencyCount {
                     // Convert word to lowercase for case-insensitive comparison
                     String lowerCaseWord = w.trim().toLowerCase();
                     if (lowerCaseWord.equals(word)) {
-                        // Update frequency count
-                        frequency = wordFrequencyMap.getOrDefault(word, 0);
-                        wordFrequencyMap.put(word, frequency + 1);
+                        // Increment frequency count
+                        frequency++;
                     }
                 }
             }
@@ -75,5 +73,6 @@ public class FrequencyCount {
 
         return frequency;
     }
+
 
 }
