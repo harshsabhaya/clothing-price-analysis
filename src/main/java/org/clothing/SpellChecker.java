@@ -1,5 +1,7 @@
 package org.clothing;
 
+import org.clothing.scraper.StoreDataInFile;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,24 +18,6 @@ public class SpellChecker {
 
     public SpellChecker() {
         dictionary = loadDictionary();
-    }
-
-    public static void checkSpelling(Scanner scanner, String category) {
-        SpellChecker spellChecker = new SpellChecker();
-        List<String> results = spellChecker.checker(category);
-
-        while (!results.isEmpty()) {
-            for (String ele : results) {
-                System.out.println(ele);
-            }
-
-            // Prompt the user to enter a corrected category
-            System.out.println("Enter a corrected category: ");
-            category = scanner.nextLine();
-
-            // Update the result list with the corrected category
-            results = spellChecker.checker(category);
-        }
     }
 
     private static int calculateEditDistance(String str1, String str2) {
@@ -57,11 +41,32 @@ public class SpellChecker {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter a word to spell check:");
-        String word = scanner.nextLine();
+        String word = scanner.nextLine().trim();
         SpellChecker obj = new SpellChecker();
         List<String> result = obj.checker(word);
         System.out.println(result);
         scanner.close();
+    }
+
+    public static String checkSpelling(Scanner scanner, String category) {
+        SpellChecker spellChecker = new SpellChecker();
+        List<String> results = spellChecker.checker(category);
+
+        while (!results.isEmpty()) {
+            for (String ele : results) {
+                System.out.println(ele);
+            }
+
+            do {
+                // Prompt the user to enter a corrected category
+                System.out.println("Enter a corrected category: ");
+                category = scanner.nextLine().trim();
+            } while (!StoreDataInFile.isValidInput(category));
+
+            // Update the result list with the corrected category
+            results = spellChecker.checker(category);
+        }
+        return category;
     }
 
     private Set<String> loadDictionary() {

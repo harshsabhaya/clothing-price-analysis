@@ -30,10 +30,9 @@ public class Ajio {
             String cssPathForProductCard = "div.item.rilrtl-products-list__item.item";
             try {
                 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(cssPathForProductCard)));
-            } catch (TimeoutException e) {
+            } catch (Exception e) {
                 // If search category not found then display not found message
-                String notFoundText = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".fnl-slpsearch-firstLine"))).getText();
-                System.out.println(notFoundText + " '" + category + "' in " + url + "\n");
+                System.out.println("Product not found for '" + category + "' in " + url + "\n");
                 return;
             }
             String productTitle = "";

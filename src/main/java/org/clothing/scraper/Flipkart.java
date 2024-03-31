@@ -29,10 +29,9 @@ public class Flipkart {
             String cssPathForProductCard = "._2B099V";
             try {
                 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(cssPathForProductCard)));
-            } catch (TimeoutException e) {
+            } catch (Exception e) {
                 // If search category not found then display not found message
-                String notFoundText = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("._3uTeW4"))).getText();
-                System.out.println(notFoundText + " for '" + category + "' in " + url + "\n");
+                System.out.println("Product not found for '" + category + "' in " + url + "\n");
                 return;
             }
 

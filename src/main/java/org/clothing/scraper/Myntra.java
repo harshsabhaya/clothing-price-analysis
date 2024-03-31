@@ -28,10 +28,9 @@ public class Myntra {
 
             try {
                 wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".results-base")));
-            } catch (TimeoutException e) {
+            } catch (Exception e) {
                 // If search category not found then display not found message
-                String notFoundText = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".index-infoBig"))).getText();
-                System.out.println(notFoundText + " for '" + category + "' in " + url + "\n");
+                System.out.println("Product not found for '" + category + "' in " + url + "\n");
                 return;
             }
 

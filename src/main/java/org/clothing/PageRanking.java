@@ -14,6 +14,10 @@ public class PageRanking {
     private static String fileWithMaxOccurrences = "";
 
     public static void main(String[] args) {
+        handlePageRanking();
+    }
+
+    public static void handlePageRanking() {
         try {
             String[] csvFiles = {
                     StoreDataInFile.getFilePath("Ajio.csv"),

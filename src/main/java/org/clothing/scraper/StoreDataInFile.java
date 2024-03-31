@@ -36,6 +36,10 @@ public class StoreDataInFile {
         }
     }
 
+    public static boolean isValidInput(String input) {
+        return input.matches("[a-zA-Z ]+");
+    }
+
     // Getter and Setter for productName
     public String getProductName() {
         return productName;

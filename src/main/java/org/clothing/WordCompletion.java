@@ -18,30 +18,30 @@ class TrieNode {
 }
 
 public class WordCompletion {
-    private TrieNode root;
-    private List<Map<String, Integer>> wordFrequencyMaps;
     private static final String[] CSV_FILE_PATHS = {
             StoreDataInFile.getFilePath("Ajio.csv"),
             StoreDataInFile.getFilePath("Myntra.csv"),
             StoreDataInFile.getFilePath("Flipkart.csv")
     };
+    private TrieNode root;
+    private List<Map<String, Integer>> wordFrequencyMaps;
 
 
+    public WordCompletion() {
+        root = new TrieNode();
+        wordFrequencyMaps = new ArrayList<>();
+    }
 
     public static void wordCompletion(Scanner scanner) {
         WordCompletion wordCompletion = new WordCompletion();
         wordCompletion.buildWordFrequencyMaps();
         wordCompletion.handleUserInput(scanner);
     }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         wordCompletion(scanner);
         scanner.close();
-    }
-
-    public WordCompletion() {
-        root = new TrieNode();
-        wordFrequencyMaps = new ArrayList<>();
     }
 
     public void buildWordFrequencyMaps() {
@@ -113,7 +113,7 @@ public class WordCompletion {
         String wordPattern = "^[a-zA-Z]+$";
 
         System.out.print("Enter partial word for completion: ");
-        String partialWord = scanner.nextLine().toLowerCase(); // Convert to lowercase for case-insensitive matching
+        String partialWord = scanner.nextLine().trim().toLowerCase(); // Convert to lowercase for case-insensitive matching
 
         // Validate user input against the word pattern
         if (!partialWord.matches(wordPattern)) {
