@@ -13,19 +13,27 @@ public class Myntra {
 
     public static void handleCrawling(String category) {
         WebDriver chromeDrive = null;
+        String url = "https://www.myntra.com/";
         try {
             ScrapperMain drive = new ScrapperMain();
             chromeDrive = drive.getDrive();
 
             // Open the website (target URL)
-            chromeDrive.get("https://www.myntra.com/");
+            chromeDrive.get(url);
 
             WebDriverWait wait = new WebDriverWait(chromeDrive, Duration.ofSeconds(10));
             WebElement searchBox = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input.desktop-searchBar")));
             searchBox.sendKeys(category);
             searchBox.sendKeys(Keys.ENTER);
 
-            wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".results-base")));
+            try {
+                wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".results-base")));
+            } catch (TimeoutException e) {
+                // If search category not found then display not found message
+                String notFoundText = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".index-infoBig"))).getText();
+                System.out.println(notFoundText + " for '" + category + "' in " + url + "\n");
+                return;
+            }
 
             // get all item elements
             List<WebElement> productItem = chromeDrive.findElements(By.cssSelector(".product-base"));

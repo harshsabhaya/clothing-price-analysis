@@ -10,11 +10,13 @@ import java.util.List;
 public class Flipkart {
     public static void handleCrawling(String category) {
         WebDriver chromeDrive = null;
+        String url = "https://www.flipkart.com/";
+
         try {
             ScrapperMain drive = new ScrapperMain();
             chromeDrive = drive.getDrive();
 
-            chromeDrive.get("https://www.flipkart.com/");
+            chromeDrive.get(url);
 
             String xPathOfInputBox = "/html/body/div[1]/div/div[1]/div/div/div/div/div[1]/div/div[1]/div/div[1]/div[1]/header/div[1]/div[2]/form/div/div/input";
 
@@ -25,7 +27,14 @@ public class Flipkart {
             searchBox.sendKeys(Keys.ENTER);
 
             String cssPathForProductCard = "._2B099V";
-            wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(cssPathForProductCard)));
+            try {
+                wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(cssPathForProductCard)));
+            } catch (TimeoutException e) {
+                // If search category not found then display not found message
+                String notFoundText = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("._3uTeW4"))).getText();
+                System.out.println(notFoundText + " for '" + category + "' in " + url + "\n");
+                return;
+            }
 
             // get all item elements
             List<WebElement> productItems = chromeDrive.findElements(By.cssSelector(cssPathForProductCard));

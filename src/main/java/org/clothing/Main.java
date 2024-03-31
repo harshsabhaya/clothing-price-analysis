@@ -3,10 +3,8 @@ package org.clothing;
 import org.clothing.scraper.Ajio;
 import org.clothing.scraper.Flipkart;
 import org.clothing.scraper.Myntra;
-import org.openqa.selenium.devtools.v85.page.Page;
 
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -107,7 +105,6 @@ public class Main {
     public static void wordCompletion(Scanner scanner) {
         WordCompletion.wordCompletion(scanner);
     }
-
 
 
     public static void main(String[] args) {

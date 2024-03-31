@@ -13,12 +13,13 @@ public class Ajio {
     // Scrap Ajio products based on url provided
     public static void handleCrawling(String category) {
         WebDriver chromeDrive = null;
+        String url = "https://www.ajio.com/";
+
         try {
             ScrapperMain drive = new ScrapperMain();
             chromeDrive = drive.getDrive();
 
-            // https://www.tatacliq.com/
-            chromeDrive.get("https://www.ajio.com/");
+            chromeDrive.get(url);
 
             // Retrieve recurring element from Doc
             WebDriverWait wait = new WebDriverWait(chromeDrive, Duration.ofSeconds(10));
@@ -27,8 +28,14 @@ public class Ajio {
             searchBox.sendKeys(Keys.ENTER);
 
             String cssPathForProductCard = "div.item.rilrtl-products-list__item.item";
-            wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(cssPathForProductCard)));
-
+            try {
+                wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(cssPathForProductCard)));
+            } catch (TimeoutException e) {
+                // If search category not found then display not found message
+                String notFoundText = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".fnl-slpsearch-firstLine"))).getText();
+                System.out.println(notFoundText + " '" + category + "' in " + url + "\n");
+                return;
+            }
             String productTitle = "";
             String productPrice = "";
             String productBrand = "";

@@ -2,9 +2,11 @@ package org.clothing;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
+import org.clothing.scraper.StoreDataInFile;
 
 import java.io.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PageRanking {
 
@@ -14,9 +16,9 @@ public class PageRanking {
     public static void main(String[] args) {
         try {
             String[] csvFiles = {
-                    "C:\\Users\\ASUS\\Desktop\\10\\clothing-price-analysis\\assets\\Flipkart.csv",
-                    "C:\\Users\\ASUS\\Desktop\\10\\clothing-price-analysis\\assets\\Myntra.csv",
-                    "C:\\Users\\ASUS\\Desktop\\10\\clothing-price-analysis\\assets\\Ajio.csv"
+                    StoreDataInFile.getFilePath("Ajio.csv"),
+                    StoreDataInFile.getFilePath("Myntra.csv"),
+                    StoreDataInFile.getFilePath("Flipkart.csv")
             };
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
