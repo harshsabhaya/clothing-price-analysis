@@ -11,7 +11,7 @@ import java.util.*;
 
 public class SpellChecker {
     // Edit distance threshold for suggesting corrections
-    private static final Integer EDIT_DISTANCE_THRESHOLD = 5;
+    private static final Integer EDIT_DISTANCE_THRESHOLD = 4;
     // Path to the directory containing dictionary file
     static Path currentPath = Paths.get(System.getProperty("user.dir"));
     static Path dirpath = Paths.get(currentPath.toString(), "assets");

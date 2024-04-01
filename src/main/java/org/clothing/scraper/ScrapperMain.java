@@ -6,26 +6,31 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class ScrapperMain {
 
+    // Method to get WebDriver object
     public WebDriver getDrive() {
-        WebDriver driver = null;
-        String chromeDrivePath = "C:\\Users\\Harsh Sabhaya\\eclipse-workspace\\chromedriver-win64\\chromedriver.exe";
-        String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36";
+        WebDriver drvr = null; // Initialize WebDriver object as null
+        String chrme_drvr_pth = "C:\\Users\\ASUS\\Desktop\\sel\\ChromeDriver\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe"; // Path to ChromeDriver executable
+        String user_pth = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"; // Custom user agent string
 
         try {
+            // Set system property for Chrome_Driver
+            System.setProperty("webdriver.chrome.driver", chrme_drvr_pth);
 
-            System.setProperty("webdriver.chrome.driver", chromeDrivePath);
-
-            // Initialize ChromeDriver
+            // Initialize ChromeOptions to configure ChromeDriver
             ChromeOptions options = new ChromeOptions();
-            options.addArguments("--start-maximized");
-//            options.addArguments("--headless");
-            options.addArguments("user-agent=" + userAgent);
 
-            driver = new ChromeDriver(options);
+            // Maximize the browser window
+            options.addArguments("--start-maximized");
+
+            // Set a custom user agent for Chrome
+            options.addArguments("user-agent=" + user_pth);
+
+            // Initialize ChromeDriver with configured options
+            drvr = new ChromeDriver(options);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Print any exceptions that occur
         }
-        return driver;
+        return drvr; // Return the WebDriver object
     }
 }

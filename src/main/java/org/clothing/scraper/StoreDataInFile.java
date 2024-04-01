@@ -44,7 +44,9 @@ public class StoreDataInFile {
 
     // Static method to validate input (accepts only alphabets and spaces)
     public static boolean isValidInput(String input) {
-        return input.matches("[a-zA-Z ]+");
+
+        return input.matches("^([a-zA-Z&]+(\\s[a-zA-Z&]+)*)$");
+
     }
 
     // Method to format product data in CSV format

@@ -4,6 +4,7 @@ import org.clothing.scraper.Ajio;
 import org.clothing.scraper.Flipkart;
 import org.clothing.scraper.Myntra;
 import org.clothing.scraper.StoreDataInFile;
+import java.util.InputMismatchException;
 
 import java.util.Scanner;
 
@@ -31,6 +32,8 @@ public class Main {
         SearchFrequency.saveWordFrequencyToCSV();
 
     }
+
+
 
     public static void webScrapping(String category) {
         Myntra.handleCrawling(category);
@@ -74,18 +77,73 @@ public class Main {
                 " |_|  |_| \\___| \\__, |    \\__||_| |_| \\___||_|   \\___|(_)   |_____|  \\__,_||_| |_| |_|   |_|     |_|  \\_\\ \\____/ |_____/  \\____/ \n" +
                 "                 __/ |                                                                                                           \n" +
                 "                |___/                                                                                                            \n");
-        System.out.println("YOUR OWN PRODUCT ANALYZER.");
-        System.out.println("I BRING YOU THE BEST INFO IN BEST POSSIBLE WAY FROM MYNTRA.COM, FLIPKART.COM & AJIO.COM");
-        System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
-        // Features
-        showTopSearchedResult();
-        collectAndProcessInput(scanner);
-        wordCompletion(scanner);
-        checkFrequency(scanner);
-        invertedIndexing(scanner);
-        pageRanking();
-        scanner.close();
+        System.out.println(">>> YOUR OWN PRODUCT ANALYZER.");
+        System.out.println(">>> I BRING YOU THE BEST INFO IN BEST POSSIBLE WAY FROM MYNTRA.COM, FLIPKART.COM & AJIO.COM");
 
-    }
+
+
+        // Features menu
+        System.out.println(">>> HERE'S WHAT I CAN DO. CHOOSE ANY ONE AND SEE HOW I WORK - LIGHTNING SPEEEEEEED!\uD83D\uDCA8 \uD83D\uDCA8");
+        while (true) {
+            // Features menu
+            System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("1  \uD83D\uDD0D Display Top Searches by User");
+            System.out.println("2. \uD83D\uDCC4 Start Scrapping");
+            System.out.println("3. \uD83D\uDD24 Word Completion");
+            System.out.println("4. #\uFE0F⃣ Check Frequency");
+            System.out.println("5. \uD83C\uDF10 Inverted Indexing");
+            System.out.println("6. \uD83D\uDCC3 Page Ranking");
+            System.out.println("7. \uD83D\uDC4B Give me exit PRODO!! I'm done");
+            System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
+
+            System.out.print("Enter the number of the feature you want to run: ");
+
+            int choice = 0;
+            boolean validInput = false;
+            while (!validInput) {
+                String input = scanner.nextLine();
+                try {
+                    choice = Integer.parseInt(input);
+                    validInput = true;
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Please enter a valid integer.");
+                    System.out.print("Enter the number of the feature you want to run: ");
+                }
+            }
+
+            switch (choice) {
+                case 1:
+                    showTopSearchedResult();
+                    break;
+                case 2:
+                    collectAndProcessInput(scanner);
+                    break;
+                case 3:
+                    wordCompletion(scanner);
+                    break;
+                case 4:
+                    checkFrequency(scanner);
+                    break;
+                case 5:
+                    invertedIndexing(scanner);
+                    break;
+                case 6:
+                    pageRanking();
+                    break;
+                case 7:
+                    System.out.println("Exiting program... ");
+                    System.out.println("ON A SERIOUS NOTE - You made me consume a lot of water. Save Environment. Please.\uD83D\uDCA7 \uD83D\uDCA7");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please enter a number between 1 and 7.");
+            }
+        }
+}
+
+
+
+
+
 
 }

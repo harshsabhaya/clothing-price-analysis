@@ -19,7 +19,7 @@ public class SearchFrequency {
             for (Map.Entry<String, Integer> entry : wordFrequencyMap.entrySet()) {
                 writer.append(entry.getKey()).append(",").append(String.valueOf(entry.getValue())).append("\n");
             }
-            System.out.println("Word frequencies saved to " + CSV_FILE + " successfully.");
+//            System.out.println("Word frequencies saved to " + CSV_FILE + " successfully.");
         } catch (IOException e) {
             // Handle IOException
             System.out.println("An error occurred while writing to the CSV file: " + e.getMessage());

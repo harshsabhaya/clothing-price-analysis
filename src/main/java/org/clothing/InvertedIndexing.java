@@ -134,7 +134,13 @@ public class InvertedIndexing {
     public static void findInvertedIndexing(Scanner scanner) {
         System.out.println("Enter a word to locate in the CSV files (Inverted Indexing):");
         String searchWord = scanner.nextLine().trim().toLowerCase();
-        handleInvertedIndexing(searchWord);
+        // Check if the input is empty or contains only whitespace
+        if (!searchWord.isEmpty()) {
+            handleInvertedIndexing(searchWord);
+        } else {
+            System.out.println("Input cannot be empty or contain only whitespace.");
+        }
+
     }
 
     // Method to handle inverted indexing for a given search word
