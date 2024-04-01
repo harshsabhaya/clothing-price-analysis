@@ -10,17 +10,24 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class SpellChecker {
+    // Edit distance threshold for suggesting corrections
     private static final Integer EDIT_DISTANCE_THRESHOLD = 5;
+    // Path to the directory containing dictionary file
     static Path currentPath = Paths.get(System.getProperty("user.dir"));
     static Path dirpath = Paths.get(currentPath.toString(), "assets");
+    // Path to the dictionary file
     private static final String DICTIONARY_PATH = dirpath + "/" + "dictionary.txt";
+    // Set to store words from the dictionary
     private static Set<String> dictionary = new HashSet<>();
 
+    // Constructor to load dictionary
     public SpellChecker() {
         dictionary = loadDictionary();
     }
 
+    // Method to calculate edit distance between two strings
     private static int calculateEditDistance(String str1, String str2) {
+        // Dynamic programming approach for calculating edit distance
         int[][] dp = new int[str1.length() + 1][str2.length() + 1];
         for (int i = 0; i <= str1.length(); i++) {
             for (int j = 0; j <= str2.length(); j++) {
@@ -38,6 +45,7 @@ public class SpellChecker {
         return dp[str1.length()][str2.length()];
     }
 
+    // Main method for spell checking
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter a word to spell check:");
@@ -48,6 +56,7 @@ public class SpellChecker {
         scanner.close();
     }
 
+    // Method to perform spell checking for a category
     public static String checkSpelling(Scanner scanner, String category) {
         SpellChecker spellChecker = new SpellChecker();
         List<String> results = spellChecker.checker(category);
@@ -69,6 +78,7 @@ public class SpellChecker {
         return category;
     }
 
+    // Method to load dictionary from file
     private Set<String> loadDictionary() {
         Set<String> dictionary = new HashSet<>();
         File dictionaryFile = new File(DICTIONARY_PATH);
@@ -89,6 +99,7 @@ public class SpellChecker {
         }
 
         try (Scanner scanner = new Scanner(new File(DICTIONARY_PATH))) {
+            // Read words from the dictionary file and add them to the set
             while (scanner.hasNextLine()) {
                 dictionary.add(scanner.nextLine().trim().toLowerCase());
             }
@@ -100,11 +111,9 @@ public class SpellChecker {
         return dictionary;
     }
 
+    // Method to perform spell checking and suggest corrections
     public List<String> checker(String word) {
         String lowerCaseWord = word.toLowerCase();
-//        if (dictionary.contains(lowerCaseWord)) {
-//            System.out.println("You entered Correct spelling: " + word);
-//        }
         List<String> suggestions = getSuggestions(lowerCaseWord);
         if (!suggestions.isEmpty()) {
             System.out.println("Suggestions for \"" + word + "\": ");
@@ -112,13 +121,15 @@ public class SpellChecker {
         return suggestions;
     }
 
+    // Method to get suggestions for misspelled word
     public List<String> getSuggestions(String word) {
         List<String> suggestions = new ArrayList<>();
         for (String dictWord : dictionary) {
+            // Calculate edit distance between the input word and dictionary words
             if (calculateEditDistance(word, dictWord) == 0) {
-                return Collections.emptyList();
-            } else if (calculateEditDistance(word, dictWord) <= EDIT_DISTANCE_THRESHOLD) { // Adjust distance threshold as needed
-                suggestions.add(dictWord);
+                return Collections.emptyList(); // Exact match found, no suggestions needed
+            } else if (calculateEditDistance(word, dictWord) <= EDIT_DISTANCE_THRESHOLD) {
+                suggestions.add(dictWord); // Add words within edit distance threshold as suggestions
             }
         }
         return suggestions;

@@ -1,6 +1,6 @@
 package org.clothing;
 
-import org.clothing.scraper.StoreDataInFile;
+import org.clothing.scraper.StoreDataInFile; // Import statement for a custom class
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,12 +12,13 @@ import java.util.Set;
 
 class AVLNode {
     String word;
-    Set<String> cellLocations;
-    Set<Integer> lineNumbers;
+    Set<String> cellLocations; // Stores the locations of cells containing the word
+    Set<Integer> lineNumbers; // Stores the line numbers where the word occurs
 
-    int height;
-    AVLNode left, right;
+    int height; // Height of the nodes in the given AVL tree
+    AVLNode left, right; //  way towards left to right node
 
+    // Constructor to initialize the AVLNode with a word, cell location, and line number
     AVLNode(String word, String cellLocation, int lineNumber) {
         this.word = word;
         this.cellLocations = new HashSet<>();
@@ -29,18 +30,21 @@ class AVLNode {
 }
 
 class AVLTree {
-    AVLNode root;
+    AVLNode root; // R00T node of the AVL tree
 
+    // Method utilized to calculate the heights of nodes
     int height(AVLNode node) {
         if (node == null) return 0;
         return node.height;
     }
 
+    // Method used to calculate the balancing nodes
     int balanceFactor(AVLNode node) {
         if (node == null) return 0;
         return height(node.left) - height(node.right);
     }
 
+    // Method used to perform a Right-sideed rotation on the AVL tree
     AVLNode rotateRight(AVLNode y) {
         AVLNode x = y.left;
         AVLNode T2 = x.right;
@@ -54,6 +58,7 @@ class AVLTree {
         return x;
     }
 
+    // Method to perform a left rotation on the AVL tree
     AVLNode rotateLeft(AVLNode x) {
         AVLNode y = x.right;
         AVLNode T2 = y.left;
@@ -67,6 +72,7 @@ class AVLTree {
         return y;
     }
 
+    // Method to inserting a node in the AVL tree
     AVLNode insert(AVLNode node, String word, String cellLocation, int lineNumber) {
         if (node == null) return new AVLNode(word, cellLocation, lineNumber);
 
@@ -105,6 +111,7 @@ class AVLTree {
         return node;
     }
 
+    // Method utilized for  performing an inorder-traversal given in AVL tree
     void inorder(AVLNode node) {
         if (node != null) {
             inorder(node.left);
@@ -116,21 +123,21 @@ class AVLTree {
 
 public class InvertedIndexing {
 
+    // this is the Main method to initilize a program
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         findInvertedIndexing(scanner);
         scanner.close();
     }
 
+    // Method to prompt the user to enter a word for inverted indexing
     public static void findInvertedIndexing(Scanner scanner) {
-        // Prompt the user to enter a word to locate in the CSV files
         System.out.println("Enter a word to locate in the CSV files (Inverted Indexing):");
         String searchWord = scanner.nextLine().trim().toLowerCase();
-
-        // Call inverted indexing method
         handleInvertedIndexing(searchWord);
     }
 
+    // Method to handle inverted indexing for a given search word
     public static void handleInvertedIndexing(String searchWord) {
         String[] csvFiles = {
                 "Ajio.csv", "Flipkart.csv", "Myntra.csv"
@@ -163,6 +170,7 @@ public class InvertedIndexing {
         }
     }
 
+    // Method to build an inverted index from a CSV file
     public static AVLTree buildInvertedIndex(String filePath) {
         AVLTree avlTree = new AVLTree();
         int lineNumber = 1;
@@ -190,6 +198,7 @@ public class InvertedIndexing {
         return avlTree;
     }
 
+    // functions used to searching in AVL tree
     static AVLNode search(AVLNode node, String word) {
         if (node == null || node.word.equals(word)) {
             return node;
